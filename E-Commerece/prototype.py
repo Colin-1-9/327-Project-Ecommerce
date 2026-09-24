@@ -11,9 +11,12 @@ def producer(name, queue):
         item = f"Item: {i}, Product: {name}"
         print(f"[Producer{name} | PID {os.getpid()}, Process {item}]")
         queue.put(item)
+        time.sleep(0.5)
 
-def buyer(name, queue):
-    pass
+def Consumer(name, queue):
+    item = queue.get()
+    print(f"Consumer{name} | PID: {os.getpid()}, Process {item}")
+    time.sleep(0.3)
 
 def main():
     pass
