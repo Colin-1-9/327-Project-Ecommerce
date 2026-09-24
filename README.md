@@ -1,1 +1,1 @@
-nothing yet
+Our project document is currently formatted for Google Docs and can be viewed there: https://docs.google.com/document/d/1E3bdKVe7tLW44Cie4TIQwHL7jc0dJDfErVVfRD8OhnI/edit?tab=t.0#heading=h.1g7jiusq37l0 
