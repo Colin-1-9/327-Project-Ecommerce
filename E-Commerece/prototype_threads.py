@@ -19,6 +19,13 @@ def Consumer(name, queue):
     item = queue.get()
     print(f"Consumer{name} | PID: {os.getpid()}, Process {item}")
     time.sleep(0.3)
+    
+processes = [Process(target=producer, args=(f"Producer-{i}", q)) for i in range(3)]
 
 def main():
-    pass
+    for p in processes:
+        p.start()
+    for p in processes:
+        p.join()
+
+main()
