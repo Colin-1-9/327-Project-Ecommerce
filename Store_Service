@@ -1,0 +1,8 @@
+import socket
+def store_server():
+  customer_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+  customer_sock.bind(("127.0.0.1", 5002))
+  inventory_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+  while True:
+    data, addr = sock.recvfrom(1024)
+    item.sendto(b"ack: " + data, addr)

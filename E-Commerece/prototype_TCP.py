@@ -1,4 +1,0 @@
-# TCP
-
-def main():
-  pass
