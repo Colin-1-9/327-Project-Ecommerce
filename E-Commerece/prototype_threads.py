@@ -32,7 +32,7 @@ def main():
     for p in producers: p.join()
     for c in consumers: c.join()
 
-    print("\n Buffer Empty")
+    print("\nBuffer Empty")
     print("All processes have completed.")
 
 main()
