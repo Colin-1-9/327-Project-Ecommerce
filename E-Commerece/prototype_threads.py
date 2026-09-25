@@ -2,7 +2,6 @@
 from multiprocessing import Process, Queue
 import os
 import time
-import random
 import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
