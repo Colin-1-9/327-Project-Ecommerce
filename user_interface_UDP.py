@@ -13,3 +13,11 @@ else:
     sock.sendto(b"hello from customer via udp", ("127.0.0.1", 5002))
 data, _ = sock.recvfrom(1024)
 print(data.decode())
+
+if input("Place order? (y/n)") == 'y':
+    sock.sendto(b"sendproducts", ("127.0.0.1", 5002))
+    data, _ = sock.recvfrom(1024)
+    print(data.decode())
+    product_purchased = input("choose item to purchase\n")
+    print("contacting order service")
+    sock.sendto(b"orderplaced", ("127.0.0.1", 5003))
