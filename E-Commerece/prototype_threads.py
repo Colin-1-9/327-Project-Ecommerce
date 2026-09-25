@@ -2,25 +2,25 @@
 from multiprocessing import Process, Queue
 import os
 import time
-import queue
-# Messege queues
-q = queue.Queue(maxsize=3)
+import random
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Sellers inventory
-def producer(name, queue):
+def Producer(name, queue):
     for i in range(3):
         item = f"Item: {i}, Product: {name}"
-        print(f"[Producer{name} | PID {os.getpid()}, Process {item}]")
+        logging.info(f"[Producer {name} | PID {os.getpid()}, Process {item}]")
         queue.put(item)
         time.sleep(0.5)
 
-#Buyers
 def Consumer(name, queue):
     item = queue.get()
-    print(f"Consumer{name} | PID: {os.getpid()}, Process {item}")
+    logging.info(f"[Consumer {name} | PID: {os.getpid()}, Process {item}]")
     time.sleep(0.3)
-    
-processes = [Process(target=producer, args=(f"Producer-{i}", q)) for i in range(3)]
+
+q = Queue(maxsize=3)
+processes = [Process(target=Producer, args=(f"Producer-{i}", q)) for i in range(3)]
+processes += [Process(target=Consumer, args=(f"Consumer-{i}", q)) for i in range(3)]
 
 def main():
     for p in processes:
