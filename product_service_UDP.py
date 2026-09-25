@@ -7,7 +7,7 @@ products = []
 
 while True:
     data, addr = sock.recvfrom(1024)
-    user_role = data.decode()[12]
+    user_role = data.decode()[11]
     if user_role == 's':
         product_name = data.decode()[25:]
         products.append(product_name)
