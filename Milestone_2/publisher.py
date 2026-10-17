@@ -1,4 +1,4 @@
-# Author: Thomas Johnson
+# Author: Thomas Johnson, Koji Maniago
 # Date: 2026/10/13
 
 # Publisher
@@ -21,8 +21,8 @@ message += b"=" * 50
 
 message += b"\nUpdates on products, promotions, and analytical news:"
 message += b"\nNotifications: Shirts, Pants, and Shoes are back In-Stock!"
-message += b"\nPromotions: Buy 1 Get 1 Free!"
-message += b"\nAnalytics: Here are the latest sales data for this month."
+#message += b"\nPromotions: Buy 1 Get 1 Free!"
+#message += b"\nAnalytics: Here are the latest sales data for this month."
 bytes = marshal.dumps(message)
 redata = marshal.loads(bytes)
 # Accepted Connections: 3
@@ -33,6 +33,5 @@ for i in range(3):
 
 for conn in subscribers:
     conn.sendall(redata)
-    data = conn.recv(1024)
-    conn.sendall(b"ack: " + data)
+
 
