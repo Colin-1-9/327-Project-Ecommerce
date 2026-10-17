@@ -1,3 +1,5 @@
+# Author: Nalysse Nakazato
+# Date: 10 - 17 - 2026
 import socket
 import json
 import logging
