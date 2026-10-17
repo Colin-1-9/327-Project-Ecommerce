@@ -19,3 +19,19 @@ else:
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(("127.0.0.1", 5004))
     server.listen(3)
+    
+    while True:
+        conn, addr = server.accept()
+        with conn:
+            request = json.loads(conn.recv(4096).decode())
+            logging.info("Received: %s", request)
+
+            # Ask the existing inventory service for its product list.
+            inventory = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            inventory.sendto(b"getproducts", ("127.0.0.1", 5003))
+            products, _ = inventory.recvfrom(4096)
+            inventory.close()
+
+            reply = {"products": products.decode().split(", ")}
+            conn.sendall(json.dumps(reply).encode())
+            logging.info("Sent: %s", reply)
