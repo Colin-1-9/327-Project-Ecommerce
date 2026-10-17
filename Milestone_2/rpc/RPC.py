@@ -15,7 +15,6 @@ if len(sys.argv) > 1 and sys.argv[1] == "client":
     message = json.dumps(request)
     print("After marshalling:", message)
     sock.sendall(message.encode())
-
     data = sock.recv(4096)
     print("After unmarshalling:", json.loads(data.decode()))
     sock.close()
