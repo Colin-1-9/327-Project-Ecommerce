@@ -30,9 +30,10 @@ else:
             logging.info("Received: %s", request)
 
             # Ask the existing inventory service for its product list.
-            inventory = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            inventory.sendto(b"getproducts", ("127.0.0.1", 5003))
-            products, _ = inventory.recvfrom(4096)
+            inventory = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            inventory.connect(("127.0.0.1", 5003))
+            inventory.sendall(b"getproducts")
+            products = inventory.recv(4096)
             inventory.close()
 
             reply = {"products": products.decode().split(", ")}
