@@ -10,7 +10,10 @@ if len(sys.argv) > 1 and sys.argv[1] == "client":
     sock.connect(("127.0.0.1", 5004))
     request = {"method": "get_products"}
     print("Before marshalling:", request)
-    sock.sendall(json.dumps(request).encode())
+    message = json.dumps(request)
+    print("After marshalling:", message)
+    sock.sendall(message.encode())
+
     data = sock.recv(4096)
     print("After unmarshalling:", json.loads(data.decode()))
     sock.close()
