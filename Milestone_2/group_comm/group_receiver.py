@@ -2,6 +2,7 @@
 import socket
 import json
 import sys
+import msvcrt
 
 # Get the port number from the terminal
 port = int(sys.argv[1])
@@ -21,8 +22,23 @@ data, address = receiver.recvfrom(4096)
 # Convert JSON bytes back into a Python dictionary
 message = json.loads(data.decode("utf-8"))
 
+log = f"\nPort {port} received message from {address}, {message['sender']}\nEvent: {message['event']}\nProduct: {message['product']}\nStatus: {message['status']}\nTimestamp: {message['timestamp']}\n"
+
 with open('messagelogging.txt', 'a') as f:
-        f.write(f"\nPort {port} received message from {address}, {message['sender']}\nEvent: {message['event']}\nProduct: {message['product']}\nStatus: {message['status']}\nTimestamp: {message['timestamp']}\n")
+        #msvcrt is a windows specific mutex
+        #used here to allow multiple receivers to write to the same log file
+
+        #use consistent file identifier
+        fd = f.fileno()
+        f.seek(0)
+        #lock access to log file
+        msvcrt.locking(fd, msvcrt.LK_LOCK, 1)
+        try:
+            f.write(log)
+            f.flush()
+        finally:
+              #release lock
+              msvcrt.locking(fd, msvcrt.LK_UNLCK, 1)
 print(f"Message received from {address}")
 print(f"Sender: {message['sender']}")
 print(f"Event: {message['event']}")
